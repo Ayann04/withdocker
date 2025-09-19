@@ -120,11 +120,11 @@ def _driver_from_config():
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
 
-    # Tell Selenium where Chromium is
-    chrome_options.binary_location = "/usr/bin/chromium"
+     chrome_options.binary_location = shutil.which("chromium") or shutil.which("chromium-browser")
 
-    # Point to chromedriver
-    service = Service("/usr/bin/chromedriver")
+    # chromedriver location
+    driver_path = shutil.which("chromedriver")
+    service = Service(driver_path)
 
     driver = webdriver.Chrome(service=service, options=chrome_options)
     return driver
